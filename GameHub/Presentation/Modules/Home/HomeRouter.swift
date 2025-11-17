@@ -11,7 +11,7 @@ final class HomeRouter: HomeRouterInput {
     
     weak var viewController: UIViewController?
     
-    func openDetails(for id: Int) {
-        print("Открываем детали игры id:", id)
+    func openDetails(for game: Game) {
+        print("Открываем детали для игры:", game.name)
     }
 }

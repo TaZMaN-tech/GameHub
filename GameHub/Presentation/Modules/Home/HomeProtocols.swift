@@ -12,6 +12,7 @@ import UIKit
 protocol HomeViewInput: AnyObject {
     func showLoading(_ isLoading: Bool)
     func showError(_ message: String)
+    func display(sections: [HomeSectionViewModel])
 }
 
 protocol HomeViewOutput: AnyObject {
@@ -26,12 +27,12 @@ protocol HomeInteractorInput: AnyObject {
 }
 
 protocol HomeInteractorOutput: AnyObject {
-    func didLoadData()
+    func didLoad(sections: [HomeSection])
     func didFailLoading(_ error: Error)
 }
 
 // MARK: - Router
 
 protocol HomeRouterInput: AnyObject {
-    func openDetails(for id: Int)
+    func openDetails(for game: Game)
 }
