@@ -17,11 +17,8 @@ final class ApplicationCoordinator {
     }
     
     func start() {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .systemBackground
-        vc.title = "GameHub"
-        
-        navigationController.viewControllers = [vc]
+        let homeVC = HomeModuleBuilder.build()
+        navigationController.viewControllers = [homeVC]
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
