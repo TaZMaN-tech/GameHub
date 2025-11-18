@@ -25,7 +25,8 @@ final class HomePresenter {
             let items = section.games.map {
                 GameItemViewModel(
                     title: $0.name,
-                    subtitle: $0.genre
+                    subtitle: $0.genre,
+                    imageURL: $0.backgroundImageURL
                 )
             }
             return HomeSectionViewModel(

@@ -21,6 +21,7 @@ struct HomeSection {
 struct GameItemViewModel {
     let title: String
     let subtitle: String
+    let imageURL: URL?
 }
 
 struct HomeSectionViewModel {

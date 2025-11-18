@@ -25,7 +25,8 @@ final class GameDetailsPresenter {
         GameDetailsViewModel(
             title: game.name,
             genre: game.genre,
-            ratingText: game.rating > 0 ? "⭐️ \(String(format: "%.1f", game.rating))" : "Нет рейтинга"
+            ratingText: game.rating > 0 ? "⭐️ \(String(format: "%.1f", game.rating))" : "Нет рейтинга",
+            imageURL: game.backgroundImageURL
         )
     }
 }

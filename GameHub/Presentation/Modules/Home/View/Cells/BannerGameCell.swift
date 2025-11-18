@@ -69,5 +69,15 @@ final class BannerGameCell: UICollectionViewCell {
     func configure(with viewModel: GameItemViewModel) {
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.subtitle
+        
+        imageView.image = nil
+        
+        if let url = viewModel.imageURL {
+            ImageLoader.shared.loadImage(from: url) { [weak self] image in
+                self?.imageView.image = image
+            }
+        } else {
+            imageView.image = UIImage(systemName: "gamecontroller")
+        }
     }
 }

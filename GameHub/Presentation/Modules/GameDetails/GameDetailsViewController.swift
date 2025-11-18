@@ -33,5 +33,13 @@ final class GameDetailsViewController: UIViewController, GameDetailsViewInput {
         contentView.titleLabel.text = viewModel.title
         contentView.genreLabel.text = viewModel.genre
         contentView.ratingLabel.text = "Rating: \(viewModel.ratingText)"
+        
+        contentView.posterImageView.image = nil
+
+        if let url = viewModel.imageURL {
+            ImageLoader.shared.loadImage(from: url) { [weak self] image in
+                self?.contentView.posterImageView.image = image
+            }
+        }
     }
 }

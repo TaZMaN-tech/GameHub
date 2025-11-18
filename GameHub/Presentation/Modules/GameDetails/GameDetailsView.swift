@@ -14,6 +14,7 @@ final class GameDetailsView: UIView {
     private let contentStack = UIStackView()
     let backgroundView = GradientBackgroundView()
     
+    let posterImageView = UIImageView()
     let titleLabel = UILabel()
     let genreLabel = UILabel()
     let ratingLabel = UILabel()
@@ -50,6 +51,14 @@ final class GameDetailsView: UIView {
             make.width.equalToSuperview()
         }
         
+        posterImageView.contentMode = .scaleAspectFill
+        posterImageView.clipsToBounds = true
+        posterImageView.layer.cornerRadius = 20
+        posterImageView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        posterImageView.snp.makeConstraints { make in
+            make.height.equalTo(posterImageView.snp.width).multipliedBy(9.0/16.0)
+        }
+        
         titleLabel.font = .boldSystemFont(ofSize: 28)
         titleLabel.textColor = .white
         titleLabel.numberOfLines = 0
@@ -60,6 +69,7 @@ final class GameDetailsView: UIView {
         ratingLabel.font = .systemFont(ofSize: 16, weight: .semibold)
         ratingLabel.textColor = .systemYellow
         
+        contentStack.addArrangedSubview(posterImageView)
         contentStack.addArrangedSubview(titleLabel)
         contentStack.addArrangedSubview(genreLabel)
         contentStack.addArrangedSubview(ratingLabel)
