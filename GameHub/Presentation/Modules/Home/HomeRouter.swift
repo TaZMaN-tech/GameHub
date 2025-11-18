@@ -12,6 +12,7 @@ final class HomeRouter: HomeRouterInput {
     weak var viewController: UIViewController?
     
     func openDetails(for game: Game) {
-        print("Открываем детали для игры:", game.name)
+        let detailsViewController = GameDetailsModuleBuilder.build(with: game)
+        viewController?.navigationController?.pushViewController(detailsViewController, animated: true)
     }
 }
