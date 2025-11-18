@@ -26,6 +26,18 @@ final class GameDetailsViewController: UIViewController, GameDetailsViewInput {
     
     private func setupUI() {
         navigationItem.largeTitleDisplayMode = .never
+        
+        let favoriteButton = UIBarButtonItem(
+            image: UIImage(systemName: "star"),
+            style: .plain,
+            target: self,
+            action: #selector(favoriteTapped))
+        navigationItem.rightBarButtonItem = favoriteButton
+        
+    }
+    
+    @objc private func favoriteTapped() {
+        output?.didTapFavorite()
     }
     
     func display(viewModel: GameDetailsViewModel) {
@@ -34,12 +46,19 @@ final class GameDetailsViewController: UIViewController, GameDetailsViewInput {
         contentView.genreLabel.text = viewModel.genre
         contentView.ratingLabel.text = "Rating: \(viewModel.ratingText)"
         
+        updateFavorite(isFavorite: viewModel.isFavorite)
+        
         contentView.posterImageView.image = nil
-
+        
         if let url = viewModel.imageURL {
             ImageLoader.shared.loadImage(from: url) { [weak self] image in
                 self?.contentView.posterImageView.image = image
             }
         }
+    }
+    
+    func updateFavorite(isFavorite: Bool) {
+        let imageName = isFavorite ? "star.fill" : "star"
+        navigationItem.rightBarButtonItem?.image = UIImage(systemName: imageName)
     }
 }

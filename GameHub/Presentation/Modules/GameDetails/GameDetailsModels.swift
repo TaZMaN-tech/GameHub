@@ -12,4 +12,5 @@ struct GameDetailsViewModel {
     let genre: String
     let ratingText: String
     let imageURL: URL?
+    let isFavorite: Bool
 }

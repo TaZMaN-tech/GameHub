@@ -10,11 +10,13 @@ import UIKit
 // MARK: - View
 
 protocol GameDetailsViewInput: AnyObject {
-   func display(viewModel: GameDetailsViewModel)
+    func display(viewModel: GameDetailsViewModel)
+    func updateFavorite(isFavorite: Bool)
 }
 
 protocol GameDetailsViewOutput: AnyObject {
     func viewDidLoad()
+    func didTapFavorite()
 }
 
 // MARK: - Interactor
