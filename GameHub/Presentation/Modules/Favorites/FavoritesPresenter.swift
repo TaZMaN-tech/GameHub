@@ -25,7 +25,9 @@ final class FavoritesPresenter {
         games.map {
             FavoriteGameViewModel(
                 title: $0.name,
-                subtitle: "\($0.genre)  •  ⭐️ \(String(format: "%.1f", $0.rating))")
+                subtitle: "\($0.genre)  •  ⭐️ \(String(format: "%.1f", $0.rating))",
+                imageURL: $0.backgroundImageURL
+            )
         }
     }
 }
@@ -55,7 +57,10 @@ extension FavoritesPresenter: FavoritesInteractorOutput {
     
     func didLoadFavorites(_ games: [Game]) {
         self.games = games
+        print("PRESENTER didLoadFavorites games.count =", games.count)
+        
         let viewModels = makeViewModels(from: games)
+        print("PRESENTER viewModels.count =", viewModels.count)
         view?.display(games: viewModels)
         view?.showEmptyState(games.isEmpty)
     }

@@ -66,24 +66,26 @@ final class FavoriteGameStorage: FavoriteGameStoring {
         
         do {
             let objects = try context.fetch(request)
+            print("STORAGE allFavorites objects.count =", objects.count)   // 👈 лог
+            
             return objects.compactMap { object in
                 guard
                     let name = object.value(forKey: "name") as? String,
-                    let genre = object.value(forKey: "genre") as? String,
-                    let imageURLString = object.value(forKey: "imageURL") as? String?
+                    let genre = object.value(forKey: "genre") as? String
                 else { return nil }
                 
                 let id = (object.value(forKey: "id") as? Int64).map(Int.init) ?? 0
                 let rating = object.value(forKey: "rating") as? Double ?? 0
-                let url = imageURLString.flatMap {
-                    URL(string: $0)
-                }
+                let imageURLString = object.value(forKey: "imageURL") as? String
+                let url = imageURLString.flatMap { URL(string: $0) }
                 
-                return Game(id: id,
-                            name: name,
-                            genre: genre,
-                            rating: rating,
-                            backgroundImageURL: url)
+                return Game(
+                    id: id,
+                    name: name,
+                    genre: genre,
+                    rating: rating,
+                    backgroundImageURL: url
+                )
             }
         } catch {
             print("allFavorites error:", error)
@@ -91,6 +93,6 @@ final class FavoriteGameStorage: FavoriteGameStoring {
         }
     }
     
-     
+    
     
 }

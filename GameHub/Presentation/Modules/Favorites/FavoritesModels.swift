@@ -10,4 +10,5 @@ import Foundation
 struct FavoriteGameViewModel {
     let title: String
     let subtitle: String
+    let imageURL: URL?
 }

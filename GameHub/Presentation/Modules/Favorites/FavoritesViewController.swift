@@ -33,10 +33,11 @@ final class FavoritesViewController: UIViewController, FavoritesViewInput {
     private func setupTable() {
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
-        contentView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        contentView.tableView.register(FavoriteGameCell.self, forCellReuseIdentifier: FavoriteGameCell.reuseIdentifier)
     }
     
     func display(games: [FavoriteGameViewModel]) {
+        print("✅ Favorites display, count =", games.count)
         self.items = games
         contentView.tableView.reloadData()
     }
@@ -49,20 +50,17 @@ final class FavoritesViewController: UIViewController, FavoritesViewInput {
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        items.count
+        print("✅ numberOfRowsInSection =", items.count)
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let viewModel = items[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        var config = cell.defaultContentConfiguration()
-        config.text = viewModel.title
-        config.secondaryText = viewModel.subtitle
-        cell.contentConfiguration = config
-        cell.backgroundColor = UIColor.secondarySystemBackground.withAlphaComponent(0.9)
-        cell.layer.cornerRadius = 12
-        cell.layer.masksToBounds = true
-        cell.selectionStyle = .none
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteGameCell.reuseIdentifier,
+                                                       for: indexPath) as? FavoriteGameCell else {
+            return UITableViewCell()
+        }
+        cell.configure(with: viewModel)
         return cell
     }
     
