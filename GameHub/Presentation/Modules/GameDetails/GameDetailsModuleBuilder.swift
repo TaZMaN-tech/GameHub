@@ -10,11 +10,11 @@ import UIKit
 enum GameDetailsModuleBuilder {
     
     static func build(with game: Game) -> UIViewController {
-        let interactor = GameDetailsInteractor()
-        let router = GameDetailsRouter()
         let favorites = FavoriteGameStorage()
+        let interactor = GameDetailsInteractor(game: game, favorites: favorites)
+        let router = GameDetailsRouter()
         
-        let presenter = GameDetailsPresenter(interactor: interactor, router: router, game: game, favorites: favorites)
+        let presenter = GameDetailsPresenter(interactor: interactor, router: router, game: game)
         let viewController = GameDetailsViewController()
         
         viewController.output = presenter

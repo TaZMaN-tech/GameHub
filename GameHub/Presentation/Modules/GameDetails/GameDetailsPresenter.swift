@@ -13,16 +13,14 @@ final class GameDetailsPresenter {
     
     private let interactor: GameDetailsInteractorInput
     private let router: GameDetailsRouterInput
-    private let game: Game
-    private let favorites: FavoriteGameStoring
     
+    private var game: Game
     private var isFavorite: Bool = false
     
-    init(interactor: GameDetailsInteractorInput, router: GameDetailsRouterInput, game: Game, favorites: FavoriteGameStoring) {
+    init(interactor: GameDetailsInteractorInput, router: GameDetailsRouterInput, game: Game) {
         self.interactor = interactor
         self.router = router
         self.game = game
-        self.favorites = favorites
     }
     
     private func makeViewModel() -> GameDetailsViewModel {
@@ -38,21 +36,32 @@ final class GameDetailsPresenter {
 
 extension GameDetailsPresenter: GameDetailsViewOutput {
     func viewDidLoad() {
-        let viewModel = makeViewModel()
-        view?.display(viewModel: viewModel)
+        interactor.load()
+    }
+    
+    func viewWillAppear() {
+        interactor.refreshFavoriteState()
     }
     
     func didTapFavorite() {
-        do {
-            try favorites.toggleFavorite(game)
-            isFavorite.toggle()
-            view?.updateFavorite(isFavorite: isFavorite)
-        } catch {
-            print("toggleFavorite error:", error)
-        }
+        interactor.toggleFavorite()
     }
 }
 
 extension GameDetailsPresenter: GameDetailsInteractorOutput {
+    
+    func didLoad(game: Game, isFavorite: Bool) {
+        self.game = game
+        self.isFavorite = isFavorite
+        let viewModel = makeViewModel()
+        view?.updateFavorite(isFavorite: isFavorite)
+        view?.display(viewModel: viewModel)
+    }
+    
+    func didUpdateFavorite(isFavorite: Bool) {
+        self.isFavorite = isFavorite
+        view?.updateFavorite(isFavorite: isFavorite)
+    }
+    
     
 }

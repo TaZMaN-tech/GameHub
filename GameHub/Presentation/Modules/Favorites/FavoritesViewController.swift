@@ -37,7 +37,6 @@ final class FavoritesViewController: UIViewController, FavoritesViewInput {
     }
     
     func display(games: [FavoriteGameViewModel]) {
-        print("✅ Favorites display, count =", games.count)
         self.items = games
         contentView.tableView.reloadData()
     }
@@ -50,7 +49,6 @@ final class FavoritesViewController: UIViewController, FavoritesViewInput {
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("✅ numberOfRowsInSection =", items.count)
         return items.count
     }
     

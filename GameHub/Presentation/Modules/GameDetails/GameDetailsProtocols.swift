@@ -16,17 +16,21 @@ protocol GameDetailsViewInput: AnyObject {
 
 protocol GameDetailsViewOutput: AnyObject {
     func viewDidLoad()
+    func viewWillAppear()
     func didTapFavorite()
 }
 
 // MARK: - Interactor
 
 protocol GameDetailsInteractorInput: AnyObject {
-    
+    func load()
+    func refreshFavoriteState()
+    func toggleFavorite()
 }
 
 protocol GameDetailsInteractorOutput: AnyObject {
-    
+    func didLoad(game: Game, isFavorite: Bool)
+    func didUpdateFavorite(isFavorite: Bool)
 }
 
 // MARK: - Router

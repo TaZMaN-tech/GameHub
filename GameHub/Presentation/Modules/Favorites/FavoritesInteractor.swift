@@ -19,7 +19,6 @@ final class FavoritesInteractor: FavoritesInteractorInput {
     
     func fetchFavorites() {
         let games = storage.allFavorites()
-        print("INTERACTOR fetchFavorites count =", games.count)
         output?.didLoadFavorites(games)
     }
     

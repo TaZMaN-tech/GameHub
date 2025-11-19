@@ -57,10 +57,8 @@ extension FavoritesPresenter: FavoritesInteractorOutput {
     
     func didLoadFavorites(_ games: [Game]) {
         self.games = games
-        print("PRESENTER didLoadFavorites games.count =", games.count)
         
         let viewModels = makeViewModels(from: games)
-        print("PRESENTER viewModels.count =", viewModels.count)
         view?.display(games: viewModels)
         view?.showEmptyState(games.isEmpty)
     }

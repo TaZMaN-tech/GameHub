@@ -24,6 +24,11 @@ final class GameDetailsViewController: UIViewController, GameDetailsViewInput {
         output?.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        output?.viewWillAppear()
+    }
+    
     private func setupUI() {
         navigationItem.largeTitleDisplayMode = .never
         
