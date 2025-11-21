@@ -35,14 +35,6 @@ final class HomeViewController: UIViewController, HomeViewInput {
         output?.viewDidLoad()
     }
     
-    private func setupLoadingView() {
-        view.addSubview(loadingView)
-        
-        loadingView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
-    }
-    
     private func setupUI() {
         title = "GameHub"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -57,6 +49,14 @@ final class HomeViewController: UIViewController, HomeViewInput {
         contentView.register(BannerGameCell.self, forCellWithReuseIdentifier: BannerGameCell.reuseIdentifier)
         contentView.register(GameHorizontalCell.self, forCellWithReuseIdentifier: GameHorizontalCell.reuseIdentifier)
         contentView.register(HomeSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HomeSectionHeaderView.reuseIdentifier)
+    }
+    
+    private func setupLoadingView() {
+        view.addSubview(loadingView)
+        
+        loadingView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -126,6 +126,8 @@ final class HomeViewController: UIViewController, HomeViewInput {
         }
         return layout
     }
+    
+    // MARK: - HomeViewInput
     
     func showLoading(_ isLoading: Bool) {
         if isLoading {

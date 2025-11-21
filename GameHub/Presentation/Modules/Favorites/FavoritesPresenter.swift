@@ -9,14 +9,15 @@ import Foundation
 
 final class FavoritesPresenter {
     
-    weak var view: FavoritesViewInput?
+    private weak var view: FavoritesViewInput?
     
     private let interactor: FavoritesInteractorInput
     private let router: FavoritesRouterInput
     
     private var games: [Game] = []
     
-    init(interactor: FavoritesInteractorInput, router: FavoritesRouterInput) {
+    init(view: FavoritesViewInput, interactor: FavoritesInteractorInput, router: FavoritesRouterInput) {
+        self.view = view
         self.interactor = interactor
         self.router = router
     }
@@ -44,7 +45,7 @@ extension FavoritesPresenter: FavoritesViewOutput {
     
     func didSelectRow(at index: Int) {
         guard index < games.count else { return }
-        router.openDetails(games[index])
+        router.routeToGameDetails(games[index])
     }
     
     func didDeleteRow(at index: Int) {

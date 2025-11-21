@@ -15,13 +15,17 @@ final class CoreDataStack {
     var viewContext: NSManagedObjectContext { persistentContainer.viewContext }
     
     private init() {
-        persistentContainer = NSPersistentContainer(name: "GameHub")
-        persistentContainer.loadPersistentStores { _, error in
+        let container = NSPersistentContainer(name: "GameHub")
+        
+        container.loadPersistentStores { _, error in
             if let error {
                 fatalError("Unresolved CoreData error: \(error)")
             }
         }
-        persistentContainer.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        
+        self.persistentContainer = container
     }
     
     func saveContext() {

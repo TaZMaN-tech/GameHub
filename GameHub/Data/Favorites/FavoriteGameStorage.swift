@@ -23,7 +23,7 @@ final class FavoriteGameStorage: FavoriteGameStoring {
     }
     
     func isFavorite(gameID: Int) -> Bool {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteGame")
+        let request = FavoriteGame.fetchRequest()
         request.predicate = NSPredicate(format: "id == %d", gameID)
         request.fetchLimit = 1
         
@@ -37,7 +37,7 @@ final class FavoriteGameStorage: FavoriteGameStoring {
     }
     
     func toggleFavorite(_ game: Game) throws {
-        let request: NSFetchRequest<NSManagedObject> = NSFetchRequest(entityName: "FavoriteGame")
+        let request = FavoriteGame.fetchRequest()
         request.predicate = NSPredicate(format: "id == %d", game.id)
         request.fetchLimit = 1
         
@@ -46,44 +46,31 @@ final class FavoriteGameStorage: FavoriteGameStoring {
         if let existing = results.first {
             context.delete(existing)
         } else {
-            guard let entity = NSEntityDescription.entity(forEntityName: "FavoriteGame", in: context) else {
-                return
-            }
-            let favorite = NSManagedObject(entity: entity, insertInto: context)
-            favorite.setValue(Int64(game.id), forKey: "id")
-            favorite.setValue(game.name, forKey: "name")
-            favorite.setValue(game.genre, forKey: "genre")
-            favorite.setValue(game.rating, forKey: "rating")
-            favorite.setValue(game.backgroundImageURL?.absoluteString, forKey: "imageURL")
-            favorite.setValue(Date(), forKey: "createdAt")
+            let favorite = FavoriteGame(context: context)
+            favorite.id = Int64(game.id)
+            favorite.name = game.name
+            favorite.genre = game.genre
+            favorite.rating = game.rating
+            favorite.imageURL = game.backgroundImageURL?.absoluteString
+            favorite.createdAt = Date()
         }
         try context.save()
     }
     
     func allFavorites() -> [Game] {
-        let request: NSFetchRequest<NSManagedObject> = NSFetchRequest(entityName: "FavoriteGame")
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        let request = FavoriteGame.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(FavoriteGame.createdAt), ascending: false)]
         
         do {
             let objects = try context.fetch(request)
-            print("STORAGE allFavorites objects.count =", objects.count)   // 👈 лог
-            
-            return objects.compactMap { object in
-                guard
-                    let name = object.value(forKey: "name") as? String,
-                    let genre = object.value(forKey: "genre") as? String
-                else { return nil }
-                
-                let id = (object.value(forKey: "id") as? Int64).map(Int.init) ?? 0
-                let rating = object.value(forKey: "rating") as? Double ?? 0
-                let imageURLString = object.value(forKey: "imageURL") as? String
-                let url = imageURLString.flatMap { URL(string: $0) }
+            return objects.map { favorite in
+                let url = favorite.imageURL.flatMap { URL(string: $0) }
                 
                 return Game(
-                    id: id,
-                    name: name,
-                    genre: genre,
-                    rating: rating,
+                    id: Int(favorite.id),
+                    name: favorite.name ?? "Unknown",
+                    genre: favorite.genre ?? "Unknown",
+                    rating: favorite.rating,
                     backgroundImageURL: url
                 )
             }

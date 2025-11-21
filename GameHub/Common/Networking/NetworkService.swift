@@ -14,9 +14,14 @@ protocol NetworkServicing {
 final class NetworkService: NetworkServicing {
     
     private let session: URLSession
+    private let decoder: JSONDecoder
     
     init(session: URLSession = .shared) {
         self.session = session
+        
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        self.decoder = decoder
     }
     
     func request<T>(_ endpoint: any Endpoint) async throws -> T where T : Decodable {
@@ -34,9 +39,6 @@ final class NetworkService: NetworkServicing {
             guard 200..<300 ~= httpResponse.statusCode else {
                 throw NetworkError.statusCode(httpResponse.statusCode)
             }
-            
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
             
             do {
                 return try decoder.decode(T.self, from: data)

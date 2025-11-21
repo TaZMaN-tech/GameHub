@@ -12,9 +12,11 @@ final class ImageLoader {
     static let shared = ImageLoader()
     
     private let cache = NSCache<NSURL, UIImage>()
-    private let queue = DispatchQueue(label: "imageLoader.queue", qos: .userInitiated)
+    private let session: URLSession
     
-    private init() {}
+    private init(session: URLSession = .shared) {
+        self.session = session
+    }
     
     func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
         let key = url as NSURL
@@ -24,21 +26,21 @@ final class ImageLoader {
             return
         }
         
-        queue.async {
-            let task = URLSession.shared.dataTask(with: url) { [weak self ] data, _, error in
-                guard let self, let data, error == nil, let Image = UIImage(data: data) else {
-                    DispatchQueue.main.async { completion(nil) }
-                    return
-                }
-                
-                self.cache.setObject(Image, forKey: key)
-                
-                DispatchQueue.main.async {
-                    completion(Image)
-                }
+        
+        let task = session.dataTask(with: url) { [weak self ] data, _, error in
+            guard let self,
+                  let data,
+                  error == nil,
+                  let Image = UIImage(data: data) else {
+                DispatchQueue.main.async { completion(nil) }
+                return
             }
-            task.resume()
+            
+            self.cache.setObject(Image, forKey: key)
+            DispatchQueue.main.async {
+                completion(Image)
+            }
         }
+        task.resume()
     }
-    
 }

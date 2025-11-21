@@ -15,18 +15,18 @@ final class HomeAssembly: HomeAssemblyProtocol {
     }
     
     func build(coordinator: HomeNavigation) -> UIViewController {
-        let view = HomeViewController()
+        let viewController = HomeViewController()
         let interactor = HomeInteractor(gameService: deps.gameService)
         let router = HomeRouter(navigation: coordinator)
         let presenter = HomePresenter(
+            view: viewController,
             interactor: interactor,
             router: router
         )
         
-        view.output = presenter
-        presenter.view = view
+        viewController.output = presenter
         interactor.output = presenter
         
-        return view
+        return viewController
     }
 }

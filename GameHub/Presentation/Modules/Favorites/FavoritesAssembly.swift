@@ -16,17 +16,17 @@ final class FavoritesAssembly: FavoritesAssemblyProtocol {
     }
     
     func build(coordinator: FavoritesNavigation) -> UIViewController {
-        let view = FavoritesViewController()
+        let viewController = FavoritesViewController()
         let interactor = FavoritesInteractor(storage: deps.favoritesStorage)
         let router = FavoritesRouter(navigation: coordinator)
         
-        let presenter = FavoritesPresenter(interactor: interactor,
+        let presenter = FavoritesPresenter(view: viewController,
+                                           interactor: interactor,
                                            router: router)
         
-        view.output = presenter
-        presenter.view = view
+        viewController.output = presenter
         interactor.output = presenter
         
-        return view
+        return viewController
     }
 }

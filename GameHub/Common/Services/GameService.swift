@@ -16,7 +16,7 @@ final class GameService: GameServicing {
     
     private let networkService: NetworkServicing
     
-    init(networkService: NetworkServicing = NetworkService()) {
+    init(networkService: NetworkServicing) {
         self.networkService = networkService
     }
     

@@ -9,13 +9,14 @@ import UIKit
 
 final class HomePresenter {
     
-    weak var view: HomeViewInput?
+    private weak var view: HomeViewInput?
     private let interactor: HomeInteractorInput
     private let router: HomeRouterInput
     
     private var sections: [HomeSection] = []
     
-    init(interactor: HomeInteractorInput, router: HomeRouterInput) {
+    init(view: HomeViewInput, interactor: HomeInteractorInput, router: HomeRouterInput) {
+        self.view = view
         self.interactor = interactor
         self.router = router
     }
@@ -70,6 +71,11 @@ extension HomePresenter: HomeInteractorOutput {
     
     func didFailLoading(_ error: any Error) {
         view?.showLoading(false)
-        view?.showError(error.localizedDescription)
+        
+        if let netError = error as? NetworkError {
+            view?.showError(netError.userMessage)
+        } else {
+            view?.showError("Что-то пошло не так. Попробуйте позже.")
+        }
     }
 }

@@ -35,7 +35,7 @@ protocol FavoritesInteractorOutput: AnyObject {
 // MARK: - Router
 
 protocol FavoritesRouterInput: AnyObject {
-    func openDetails(_ game: Game)
+    func routeToGameDetails(_ game: Game)
 }
 
 // MARK: - Navigation

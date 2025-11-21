@@ -15,7 +15,7 @@ final class FavoritesRouter: FavoritesRouterInput {
         self.navigation = navigation
     }
 
-    func openDetails(_ game: Game) {
+    func routeToGameDetails(_ game: Game) {
         navigation?.openGameDetails(fromFavorites: game)
     }
 }

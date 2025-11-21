@@ -8,15 +8,21 @@
 import Foundation
 
 struct AppDependencies {
+    let netWorkService: NetworkServicing
     let gameService: GameServicing
     let favoritesStorage: FavoriteGameStoring
 }
 
 extension AppDependencies {
     static func makeDefault() -> AppDependencies {
-        AppDependencies(
-            gameService: GameService(),
-            favoritesStorage: FavoriteGameStorage()
+        let network = NetworkService()
+        let gameService = GameService(networkService: network)
+        let favorites = FavoriteGameStorage()
+        
+        return AppDependencies(
+            netWorkService: network,
+            gameService: gameService,
+            favoritesStorage: favorites
         )
     }
 }

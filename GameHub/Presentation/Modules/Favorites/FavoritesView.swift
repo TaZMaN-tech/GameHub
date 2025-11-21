@@ -10,7 +10,7 @@ import SnapKit
 
 final class FavoritesView: UIView {
     
-    let backGroundView = GradientBackgroundView()
+    let backgroundView = GradientBackgroundView()
     let tableView = UITableView(frame: .zero, style: .plain)
     private let emptyLabel = UILabel()
     
@@ -24,8 +24,8 @@ final class FavoritesView: UIView {
     }
     
     private func setup() {
-        addSubview(backGroundView)
-        backGroundView.snp.makeConstraints { make in
+        addSubview(backgroundView)
+        backgroundView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         

@@ -16,20 +16,19 @@ final class GameDetailsAssembly: GameDetailsAssemblyProtocol {
     }
     
     func build(game: Game, coordinator: GameDetailsNavigation) -> UIViewController {
-        let view = GameDetailsViewController()
+        let viewController = GameDetailsViewController()
         let interactor = GameDetailsInteractor(game: game,
                                                favorites: deps.favoritesStorage)
         
         let router = GameDetailsRouter(navigation: coordinator)
         
-        let presenter = GameDetailsPresenter(interactor: interactor,
-                                             router: router,
-                                             game: game)
+        let presenter = GameDetailsPresenter(view: viewController,
+                                             interactor: interactor,
+                                             router: router)
         
-        view.output = presenter
-        presenter.view = view
+        viewController.output = presenter
         interactor.output = presenter
         
-        return view
+        return viewController
     }
 }

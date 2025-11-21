@@ -45,6 +45,8 @@ final class GameDetailsViewController: UIViewController, GameDetailsViewInput {
         output?.didTapFavorite()
     }
     
+    // MARK: - GameDetailsViewInput
+    
     func display(viewModel: GameDetailsViewModel) {
         title = viewModel.title
         contentView.titleLabel.text = viewModel.title

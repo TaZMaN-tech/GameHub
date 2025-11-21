@@ -14,20 +14,30 @@ final class GameDetailsPresenter {
     private let interactor: GameDetailsInteractorInput
     private let router: GameDetailsRouterInput
     
-    private var game: Game
-    private var isFavorite: Bool = false
     
-    init(interactor: GameDetailsInteractorInput, router: GameDetailsRouterInput, game: Game) {
+    
+    init(
+        view: GameDetailsViewInput,
+        interactor: GameDetailsInteractorInput,
+        router: GameDetailsRouterInput
+    ) {
+        self.view = view
         self.interactor = interactor
         self.router = router
-        self.game = game
     }
     
-    private func makeViewModel() -> GameDetailsViewModel {
-        GameDetailsViewModel(
+    private func makeViewModel(from game: Game, isFavorite: Bool) -> GameDetailsViewModel {
+        let ratingText: String
+        if game.rating > 0 {
+            ratingText = "⭐️ \(String(format: "%.1f", game.rating))"
+        } else {
+            ratingText = "Нет рейтинга"
+        }
+        
+        return GameDetailsViewModel(
             title: game.name,
             genre: game.genre,
-            ratingText: game.rating > 0 ? "⭐️ \(String(format: "%.1f", game.rating))" : "Нет рейтинга",
+            ratingText: ratingText,
             imageURL: game.backgroundImageURL,
             isFavorite: isFavorite
         )
@@ -51,15 +61,11 @@ extension GameDetailsPresenter: GameDetailsViewOutput {
 extension GameDetailsPresenter: GameDetailsInteractorOutput {
     
     func didLoad(game: Game, isFavorite: Bool) {
-        self.game = game
-        self.isFavorite = isFavorite
-        let viewModel = makeViewModel()
-        view?.updateFavorite(isFavorite: isFavorite)
+        let viewModel = makeViewModel(from: game, isFavorite: isFavorite)
         view?.display(viewModel: viewModel)
     }
     
     func didUpdateFavorite(isFavorite: Bool) {
-        self.isFavorite = isFavorite
         view?.updateFavorite(isFavorite: isFavorite)
     }
     
