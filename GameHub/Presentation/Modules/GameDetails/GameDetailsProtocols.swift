@@ -36,5 +36,17 @@ protocol GameDetailsInteractorOutput: AnyObject {
 // MARK: - Router
 
 protocol GameDetailsRouterInput: AnyObject {
-    
+    func close()
+}
+
+// MARK: - Navigation
+
+protocol GameDetailsNavigation: AnyObject {
+    func closeDetails()
+}
+
+// MARK: - Assembly
+
+protocol GameDetailsAssemblyProtocol {
+    func build(game: Game, coordinator: GameDetailsNavigation) -> UIViewController
 }

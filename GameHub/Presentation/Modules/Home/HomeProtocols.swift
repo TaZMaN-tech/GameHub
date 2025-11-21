@@ -35,5 +35,17 @@ protocol HomeInteractorOutput: AnyObject {
 // MARK: - Router
 
 protocol HomeRouterInput: AnyObject {
-    func openDetails(for game: Game)
+    func routeToGameDetails(_ game: Game)
+}
+
+// MARK: - Navigation
+
+protocol HomeNavigation: AnyObject {
+    func openGameDetails(for game: Game)
+}
+
+// MARK: - Assembly
+
+protocol HomeAssemblyProtocol {
+    func build(coordinator: HomeNavigation) -> UIViewController
 }

@@ -8,12 +8,14 @@
 import UIKit
 
 final class FavoritesRouter: FavoritesRouterInput {
-    
-    weak var viewController: UIViewController?
-    
-    func openDetails(for game: Game) {
-        let detailsViewController = GameDetailsModuleBuilder.build(with: game)
-        viewController?.navigationController?.pushViewController(detailsViewController, animated: true)
+
+    private weak var navigation: FavoritesNavigation?
+
+    init(navigation: FavoritesNavigation) {
+        self.navigation = navigation
     }
-    
+
+    func openDetails(_ game: Game) {
+        navigation?.openGameDetails(fromFavorites: game)
+    }
 }

@@ -9,10 +9,13 @@ import UIKit
 
 final class HomeRouter: HomeRouterInput {
     
-    weak var viewController: UIViewController?
+    weak var navigation: HomeNavigation?
     
-    func openDetails(for game: Game) {
-        let detailsViewController = GameDetailsModuleBuilder.build(with: game)
-        viewController?.navigationController?.pushViewController(detailsViewController, animated: true)
+    init(navigation: HomeNavigation) {
+        self.navigation = navigation
+    }
+    
+    func routeToGameDetails(_ game: Game) {
+        navigation?.openGameDetails(for: game)
     }
 }

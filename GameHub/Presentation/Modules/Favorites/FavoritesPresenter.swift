@@ -44,7 +44,7 @@ extension FavoritesPresenter: FavoritesViewOutput {
     
     func didSelectRow(at index: Int) {
         guard index < games.count else { return }
-        router.openDetails(for: games[index])
+        router.openDetails(games[index])
     }
     
     func didDeleteRow(at index: Int) {

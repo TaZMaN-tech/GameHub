@@ -55,7 +55,7 @@ extension HomePresenter: HomeViewOutput {
         let section = sections[indexPath.section]
         guard indexPath.row < section.games.count else { return }
         let game = section.games[indexPath.row]
-        router.openDetails(for: game)
+        router.routeToGameDetails(game)
     }
 }
 

@@ -8,7 +8,14 @@
 import UIKit
 
 final class GameDetailsRouter: GameDetailsRouterInput {
-    weak var viewController: UIViewController?
-    
-    
+
+    private weak var navigation: GameDetailsNavigation?
+
+    init(navigation: GameDetailsNavigation) {
+        self.navigation = navigation
+    }
+
+    func close() {
+        navigation?.closeDetails()
+    }
 }

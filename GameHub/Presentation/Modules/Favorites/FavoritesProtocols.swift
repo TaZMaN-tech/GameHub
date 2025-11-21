@@ -35,5 +35,17 @@ protocol FavoritesInteractorOutput: AnyObject {
 // MARK: - Router
 
 protocol FavoritesRouterInput: AnyObject {
-    func openDetails(for game: Game)
+    func openDetails(_ game: Game)
+}
+
+// MARK: - Navigation
+
+protocol FavoritesNavigation: AnyObject {
+    func openGameDetails(fromFavorites game: Game)
+}
+
+// MARK: - Assembly
+
+protocol FavoritesAssemblyProtocol {
+    func build(coordinator: FavoritesNavigation) -> UIViewController
 }
