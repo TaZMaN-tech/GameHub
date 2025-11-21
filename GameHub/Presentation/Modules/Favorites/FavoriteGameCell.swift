@@ -34,7 +34,7 @@ final class FavoriteGameCell: UITableViewCell {
         
         contentView.addSubview(container)
         container.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(12)
+            make.edges.equalToSuperview().inset(8)
         }
         
         container.backgroundColor = .cardBackground
@@ -64,16 +64,16 @@ final class FavoriteGameCell: UITableViewCell {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(12)
+            make.top.equalToSuperview().offset(16)
             make.left.equalTo(iconView.snp.right).offset(12)
             make.right.equalToSuperview().inset(12)
         }
         
         subtitleLabel.snp.makeConstraints { make in
-              make.top.equalTo(titleLabel.snp.bottom).offset(4)
+              make.top.equalTo(titleLabel.snp.bottom).offset(6)
               make.left.equalTo(iconView.snp.right).offset(12)
               make.right.equalToSuperview().inset(12)
-              make.bottom.equalToSuperview().inset(12)
+              make.bottom.equalToSuperview().inset(16)
           }
     }
     
