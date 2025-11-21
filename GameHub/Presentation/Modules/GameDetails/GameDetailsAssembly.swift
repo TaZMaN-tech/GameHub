@@ -8,24 +8,28 @@
 import UIKit
 
 final class GameDetailsAssembly: GameDetailsAssemblyProtocol {
-
+    
+    private let deps: AppDependencies
+    
+    init(deps: AppDependencies) {
+        self.deps = deps
+    }
+    
     func build(game: Game, coordinator: GameDetailsNavigation) -> UIViewController {
-        let favorites = FavoriteGameStorage()
-        let interactor = GameDetailsInteractor(game: game, favorites: favorites)
-        let router = GameDetailsRouter(navigation: coordinator)
-
-        let presenter = GameDetailsPresenter(
-            interactor: interactor,
-            router: router,
-            game: game
-        )
-
         let view = GameDetailsViewController()
-
-        presenter.view = view
+        let interactor = GameDetailsInteractor(game: game,
+                                               favorites: deps.favoritesStorage)
+        
+        let router = GameDetailsRouter(navigation: coordinator)
+        
+        let presenter = GameDetailsPresenter(interactor: interactor,
+                                             router: router,
+                                             game: game)
+        
         view.output = presenter
+        presenter.view = view
         interactor.output = presenter
-
+        
         return view
     }
 }

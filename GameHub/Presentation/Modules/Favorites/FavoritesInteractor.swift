@@ -13,7 +13,7 @@ final class FavoritesInteractor: FavoritesInteractorInput {
     
     private let storage: FavoriteGameStoring
     
-    init(storage: FavoriteGameStoring = FavoriteGameStorage()) {
+    init(storage: FavoriteGameStoring) {
         self.storage = storage
     }
     

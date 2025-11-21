@@ -7,26 +7,27 @@
 
 import UIKit
 
-protocol ApplicationCoordinating: AnyObject {
+protocol AppCoordinating: AnyObject {
     func start()
 }
 
-final class ApplicationCoordinator: ApplicationCoordinating {
+final class AppCoordinator: AppCoordinating {
 
     private let window: UIWindow
+    private let deps: AppDependencies
 
     private let tabBarController = UITabBarController()
-
     private let homeNavController = UINavigationController()
     private let favoritesNavController = UINavigationController()
 
-    init(window: UIWindow) {
+    init(window: UIWindow, dependencies: AppDependencies = .makeDefault()) {
         self.window = window
+        self.deps = dependencies
     }
 
     func start() {
 
-        let homeVC = HomeAssembly().build(coordinator: self)
+        let homeVC = HomeAssembly(dependencies: deps).build(coordinator: self)
         homeNavController.viewControllers = [homeVC]
         homeNavController.tabBarItem = UITabBarItem(
             title: "GameHub",
@@ -34,7 +35,7 @@ final class ApplicationCoordinator: ApplicationCoordinating {
             selectedImage: UIImage(systemName: "house.fill")
         )
 
-        let favoritesVC = FavoritesAssembly().build(coordinator: self)
+        let favoritesVC = FavoritesAssembly(dependencies: deps).build(coordinator: self)
         favoritesNavController.viewControllers = [favoritesVC]
         favoritesNavController.tabBarItem = UITabBarItem(
             title: "Favorites",
@@ -50,14 +51,14 @@ final class ApplicationCoordinator: ApplicationCoordinating {
     }
 }
 
-extension ApplicationCoordinator: HomeNavigation {
+extension AppCoordinator: HomeNavigation {
     func openGameDetails(for game: Game) {
-        let vc = GameDetailsAssembly().build(game: game, coordinator: self)
+        let vc = GameDetailsAssembly(deps: deps).build(game: game, coordinator: self)
         homeNavController.pushViewController(vc, animated: true)
     }
 }
 
-extension ApplicationCoordinator: GameDetailsNavigation {
+extension AppCoordinator: GameDetailsNavigation {
     func closeDetails() {
         if let nav = tabBarController.selectedViewController as? UINavigationController {
             nav.popViewController(animated: true)
@@ -65,9 +66,9 @@ extension ApplicationCoordinator: GameDetailsNavigation {
     }
 }
 
-extension ApplicationCoordinator: FavoritesNavigation {
+extension AppCoordinator: FavoritesNavigation {
     func openGameDetails(fromFavorites game: Game) {
-        let vc = GameDetailsAssembly().build(game: game, coordinator: self)
+        let vc = GameDetailsAssembly(deps: deps).build(game: game, coordinator: self)
         favoritesNavController.pushViewController(vc, animated: true)
     }
 }

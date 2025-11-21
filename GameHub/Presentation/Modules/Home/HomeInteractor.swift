@@ -13,7 +13,7 @@ final class HomeInteractor:  HomeInteractorInput {
     
     private let gameService: GameServicing
     
-    init(gameService: GameServicing = GameService()) {
+    init(gameService: GameServicing) {
         self.gameService = gameService
     }
     
