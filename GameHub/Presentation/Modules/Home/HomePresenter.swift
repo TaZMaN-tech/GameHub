@@ -45,6 +45,11 @@ extension HomePresenter: HomeViewOutput {
         interactor.loadInitialData()
     }
     
+    func didTapRetry() {
+        view?.showLoading(true)
+        interactor.loadInitialData()
+    }
+    
     func didSelectItem(at indexPath: IndexPath) {
         guard indexPath.section < sections.count else { return }
         let section = sections[indexPath.section]

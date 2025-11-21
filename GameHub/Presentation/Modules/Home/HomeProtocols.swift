@@ -18,6 +18,7 @@ protocol HomeViewInput: AnyObject {
 protocol HomeViewOutput: AnyObject {
     func viewDidLoad()
     func didSelectItem(at indexPath: IndexPath)
+    func didTapRetry()
 }
 
 // MARK: - Interactor

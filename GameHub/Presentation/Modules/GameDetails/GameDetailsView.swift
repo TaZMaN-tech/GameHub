@@ -60,14 +60,14 @@ final class GameDetailsView: UIView {
         }
         
         titleLabel.font = .boldSystemFont(ofSize: 28)
-        titleLabel.textColor = .white
+        titleLabel.textColor = .textPrimary
         titleLabel.numberOfLines = 0
         
         genreLabel.font = .systemFont(ofSize: 16, weight: .medium)
-        genreLabel.textColor = .white.withAlphaComponent(0.9)
+        genreLabel.textColor = .textSecondary
         
         ratingLabel.font = .systemFont(ofSize: 16, weight: .semibold)
-        ratingLabel.textColor = .systemYellow
+        ratingLabel.textColor = .textAccent
         
         contentStack.addArrangedSubview(posterImageView)
         contentStack.addArrangedSubview(titleLabel)

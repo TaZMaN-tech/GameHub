@@ -25,16 +25,20 @@ final class GameHorizontalCell: UICollectionViewCell {
     }
     
     private func configure() {
-        contentView.backgroundColor = UIColor.secondarySystemBackground.withAlphaComponent(0.9)
+        contentView.backgroundColor = .cardBackground
         contentView.layer.cornerRadius = 16
         contentView.layer.masksToBounds = true
         
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.backgroundColor = UIColor.black.withAlphaComponent(0.15)
+        imageView.backgroundColor = .cardBackground
         
         titleLabel.font = .systemFont(ofSize: 14, weight: .semibold)
-        titleLabel.textColor = .secondaryLabel
+        titleLabel.textColor = .label
+        titleLabel.numberOfLines = 2
+        
+        subtitleLabel.font = .systemFont(ofSize: 12)
+        subtitleLabel.textColor = .textSecondary
         
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)

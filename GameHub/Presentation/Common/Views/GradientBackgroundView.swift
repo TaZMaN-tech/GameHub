@@ -14,6 +14,9 @@ final class GradientBackgroundView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (view: GradientBackgroundView, _) in
+            view.updateColors()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -21,13 +24,17 @@ final class GradientBackgroundView: UIView {
     }
     
     private func setup() {
-        gradient.colors = [
-            UIColor.systemIndigo.cgColor,
-            UIColor.systemPurple.cgColor
-        ]
         gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 1, y: 1)
+        gradient.endPoint   = CGPoint(x: 1, y: 1)
         layer.insertSublayer(gradient, at: 0)
+        updateColors()
+    }
+    
+    private func updateColors() {
+        let topColor = UIColor.gradientTop.cgColor
+        let bottomColor = UIColor.gradientBottom.cgColor
+        
+        gradient.colors = [topColor, bottomColor]
     }
     
     override func layoutSubviews() {

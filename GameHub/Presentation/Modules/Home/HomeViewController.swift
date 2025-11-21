@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class HomeViewController: UIViewController, HomeViewInput {
     
@@ -13,6 +14,13 @@ final class HomeViewController: UIViewController, HomeViewInput {
     
     private lazy var contentView = HomeView(layout: createLayout())
     private var sections: [HomeSectionViewModel] = []
+    
+    private let loadingView: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
     
     override func loadView() {
         view = contentView
@@ -22,8 +30,17 @@ final class HomeViewController: UIViewController, HomeViewInput {
         super.viewDidLoad()
         setupUI()
         setupCollection()
+        setupLoadingView()
         
         output?.viewDidLoad()
+    }
+    
+    private func setupLoadingView() {
+        view.addSubview(loadingView)
+        
+        loadingView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
     
     private func setupUI() {
@@ -111,11 +128,31 @@ final class HomeViewController: UIViewController, HomeViewInput {
     }
     
     func showLoading(_ isLoading: Bool) {
-        
+        if isLoading {
+            loadingView.startAnimating()
+            contentView.collectionView.isUserInteractionEnabled = false
+        } else {
+            loadingView.stopAnimating()
+            contentView.collectionView.isUserInteractionEnabled = true
+        }
     }
     
     func showError(_ message: String) {
-        print("Home error:", message)
+        let alert = UIAlertController(
+            title: "Не удалось загрузить игры",
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        let retryAction = UIAlertAction(title: "Повторить", style: .default) { [weak self] _ in
+            self?.output?.didTapRetry()
+        }
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        
+        alert.addAction(retryAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
     
     func display(sections: [HomeSectionViewModel]) {

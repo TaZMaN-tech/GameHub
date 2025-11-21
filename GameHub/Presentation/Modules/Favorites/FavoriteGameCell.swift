@@ -37,7 +37,7 @@ final class FavoriteGameCell: UITableViewCell {
             make.edges.equalToSuperview().inset(12)
         }
         
-        container.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+        container.backgroundColor = .cardBackground
         container.layer.cornerRadius = 18
         container.layer.masksToBounds = true
         
@@ -47,11 +47,11 @@ final class FavoriteGameCell: UITableViewCell {
         iconView.backgroundColor = UIColor.black.withAlphaComponent(0.15)
         
         titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
-        titleLabel.textColor = .white
+        titleLabel.textColor = .textPrimary
         titleLabel.numberOfLines = 2
         
         subtitleLabel.font = .systemFont(ofSize: 14)
-        subtitleLabel.textColor = UIColor.white.withAlphaComponent(0.85)
+        subtitleLabel.textColor = .textSecondary
         
         container.addSubview(iconView)
         container.addSubview(titleLabel)
