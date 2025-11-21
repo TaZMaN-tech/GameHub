@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 protocol GameServicing {
     func fetchHomeSections() async throws -> [HomeSection]
 }

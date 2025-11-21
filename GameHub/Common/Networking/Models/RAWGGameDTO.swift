@@ -7,6 +7,7 @@
 
 import Foundation
 
+nonisolated
 struct RAWGGameResponseDTO: Decodable {
     let results: [RAWGGameDTO]
 }
