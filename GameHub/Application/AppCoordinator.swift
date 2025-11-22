@@ -38,7 +38,7 @@ final class AppCoordinator: AppCoordinating {
         let favoritesVC = FavoritesAssembly(dependencies: deps).build(coordinator: self)
         favoritesNavController.viewControllers = [favoritesVC]
         favoritesNavController.tabBarItem = UITabBarItem(
-            title: "Favorites",
+            title: "Избранное",
             image: UIImage(systemName: "star"),
             selectedImage: UIImage(systemName: "star.fill")
         )

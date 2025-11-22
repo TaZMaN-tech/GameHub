@@ -40,8 +40,8 @@ final class FavoritesView: UIView {
             make.edges.equalTo(safeAreaLayoutGuide)
         }
         
-        emptyLabel.text = "No favorite games yet"
-        emptyLabel.textColor = .white.withAlphaComponent(0.9)
+        emptyLabel.text = "Пока нет избранных игр"
+        emptyLabel.textColor = .textPrimary
         emptyLabel.textAlignment = .center
         emptyLabel.numberOfLines = 0
         emptyLabel.isHidden = true
