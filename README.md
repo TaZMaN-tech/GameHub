@@ -119,7 +119,7 @@ Common/
 Resources/
  ├── Assets
  └── Info.plist
-```text
+```
 
 ---
 
