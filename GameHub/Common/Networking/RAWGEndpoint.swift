@@ -22,7 +22,7 @@ enum RAWGEndpoint: Endpoint {
         components.path = RAWGConfig.baseURL.path + path
         
         var queryItems: [URLQueryItem] = [
-            URLQueryItem(name: "key", value: RAWGConfig.apiKey),
+            URLQueryItem(name: "key", value: APIConfig.rawgKey),
             URLQueryItem(name: "page_size", value: "20"),
             URLQueryItem(name: "page", value: "\(page)")
         ]
