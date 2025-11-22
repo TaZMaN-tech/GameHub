@@ -1,5 +1,5 @@
 <p align="center">
-  <!-- <img src="./README_Assets/app_icon.png" alt="GameHub Icon" width="120" /> -->
+  <img src="./README_Assets/app_icon.png" alt="GameHub Icon" width="120" />
 </p>
 
 # GameHub
