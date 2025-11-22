@@ -121,6 +121,8 @@ Resources/
  └── Info.plist
 ```text
 
+---
+
 ## 🛠 Установка и запуск
 
 ### 1. Клонировать проект
@@ -128,6 +130,14 @@ Resources/
 ```sh
 git clone https://github.com/USERNAME/GameHub.git
 cd GameHub
+```
+
+### 2. Открыть в Xcode
+
+Открыть файл:
+
+```
+GameHub.xcodeproj
 ```
 
 ---
