@@ -14,10 +14,12 @@ final class GameDetailsView: UIView {
     private let contentStack = UIStackView()
     let backgroundView = GradientBackgroundView()
     
-    let posterImageView = UIImageView()
-    let titleLabel = UILabel()
-    let genreLabel = UILabel()
-    let ratingLabel = UILabel()
+    private let posterImageView = UIImageView()
+    private let titleLabel = UILabel()
+    private let genreLabel = UILabel()
+    private let ratingLabel = UILabel()
+    
+    private var currentImageURL: URL?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,5 +75,21 @@ final class GameDetailsView: UIView {
         contentStack.addArrangedSubview(titleLabel)
         contentStack.addArrangedSubview(genreLabel)
         contentStack.addArrangedSubview(ratingLabel)
+    }
+    
+    func configure(with viewModel: GameDetailsViewModel) {
+        titleLabel.text = viewModel.title
+        genreLabel.text = viewModel.genre
+        ratingLabel.text = viewModel.ratingText
+        
+        posterImageView.image = nil
+        
+        guard let url = viewModel.imageURL else { return }
+        currentImageURL = url
+        
+        ImageLoader.shared.loadImage(from: url) { [weak self] image in
+            guard let self, self.currentImageURL == url else { return }
+            self.posterImageView.image = image
+        }
     }
 }

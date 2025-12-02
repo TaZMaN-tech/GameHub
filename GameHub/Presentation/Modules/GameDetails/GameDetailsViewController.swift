@@ -49,19 +49,8 @@ final class GameDetailsViewController: UIViewController, GameDetailsViewInput {
     
     func display(viewModel: GameDetailsViewModel) {
         title = viewModel.title
-        contentView.titleLabel.text = viewModel.title
-        contentView.genreLabel.text = viewModel.genre
-        contentView.ratingLabel.text = viewModel.ratingText
-        
+        contentView.configure(with: viewModel)
         updateFavorite(isFavorite: viewModel.isFavorite)
-        
-        contentView.posterImageView.image = nil
-        
-        if let url = viewModel.imageURL {
-            ImageLoader.shared.loadImage(from: url) { [weak self] image in
-                self?.contentView.posterImageView.image = image
-            }
-        }
     }
     
     func updateFavorite(isFavorite: Bool) {
