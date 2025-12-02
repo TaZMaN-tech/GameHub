@@ -6,11 +6,8 @@
 //
 //
 
-public import Foundation
-public import CoreData
-
-
-public typealias FavoriteGameCoreDataPropertiesSet = NSSet
+import Foundation
+import CoreData
 
 extension FavoriteGame {
 

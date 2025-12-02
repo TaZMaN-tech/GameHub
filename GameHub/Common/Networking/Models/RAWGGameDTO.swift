@@ -7,12 +7,11 @@
 
 import Foundation
 
-nonisolated
-struct RAWGGameResponseDTO: Decodable {
+nonisolated struct RAWGGameResponseDTO: Decodable {
     let results: [RAWGGameDTO]
 }
 
-struct RAWGGameDTO: Decodable {
+nonisolated struct RAWGGameDTO: Decodable {
     let id: Int
     let name: String
     let rating: Double?
@@ -20,7 +19,7 @@ struct RAWGGameDTO: Decodable {
     let backgroundImage: String?
 }
 
-struct RAWGGenreDTO: Decodable {
+nonisolated struct RAWGGenreDTO: Decodable {
     let name: String
 }
 

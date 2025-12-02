@@ -60,10 +60,24 @@ enum RAWGEndpoint: Endpoint {
         case .topRated:
             return [URLQueryItem(name: "ordering", value: "-rating")]
         case .upcoming:
-            return [URLQueryItem(name: "dates", value: "2025-01-01,2025-12-31"),
+            return [URLQueryItem(name: "dates", value: upcomingDatesRange),
                     URLQueryItem(name: "ordering", value: "-added")]
         case .trending:
             return [URLQueryItem(name: "ordering", value: "-metacritic")]
         }
+    }
+    
+    private var upcomingDatesRange: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        let today = Date()
+        let startDate = formatter.string(from: today)
+        
+        let calendar = Calendar.current
+        let endOfRange = calendar.date(byAdding: .month, value: 12, to: today) ?? today
+        let endDate = formatter.string(from: endOfRange)
+        
+        return "\(startDate),\(endDate)"
     }
 }

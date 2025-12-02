@@ -6,10 +6,8 @@
 //
 //
 
-public import Foundation
-public import CoreData
-
-public typealias FavoriteGameCoreDataClassSet = NSSet
+import Foundation
+import CoreData
 
 @objc(FavoriteGame)
 public class FavoriteGame: NSManagedObject {
