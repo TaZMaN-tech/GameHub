@@ -22,9 +22,20 @@ final class CoreDataStack: CoreDataStackProviding {
     init(modelName: String = "GameHub") {
         let container = NSPersistentContainer(name: modelName)
         
-        container.loadPersistentStores { _, error in
+        container.loadPersistentStores { description, error in
             if let error {
-                fatalError("Unresolved CoreData error: \(error)")
+                print("⚠️ CoreData persistent store error: \(error)")
+                print("⚠️ Falling back to in-memory store")
+            }
+            
+            let inMemoryDescription = NSPersistentStoreDescription()
+            inMemoryDescription.type = NSInMemoryStoreType
+            container.persistentStoreDescriptions = [inMemoryDescription]
+            
+            container.loadPersistentStores { _, fallbackError in
+                if let fallbackError {
+                    print("⚠️ Fallback in-memory store error: \(fallbackError)")
+                }
             }
         }
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
