@@ -15,6 +15,8 @@ final class GameHorizontalCell: UICollectionViewCell {
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     
+    private var currentURL: URL?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -61,18 +63,24 @@ final class GameHorizontalCell: UICollectionViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        currentURL = nil
+        imageView.image = nil
+    }
+    
     func configure(with viewModel: GameItemViewModel) {
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.subtitle
         
-        imageView.image = nil
+        imageView.image = UIImage(systemName: "gamecontroller")
         
-        if let url = viewModel.imageURL {
-            ImageLoader.shared.loadImage(from: url) { [weak self] image in
-                self?.imageView.image = image
-            }
-        } else {
-            imageView.image = UIImage(systemName: "gamecontroller")
+        guard let url = viewModel.imageURL else { return }
+        currentURL = url
+        
+        ImageLoader.shared.loadImage(from: url) { [weak self] image in
+            guard let self, self.currentURL == url else { return }
+            self.imageView.image = image ?? UIImage(systemName: "gamecontroller")
         }
     }
 }
