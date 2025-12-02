@@ -40,13 +40,22 @@ final class GameService: GameServicing {
         let topRated = try await topRatedResponse.results.map { $0.toDomain() }
         let upcoming = try await upcomingResponse.results.map { $0.toDomain() }
         
-        let bannerGame = trending.first ?? popular.first ?? topRated.first ?? upcoming.first ?? Game(id: 0, name: "Unknown", genre: "Unknown", rating: 0, backgroundImageURL: nil)
+        var sections: [HomeSection] = []
         
-        return [
-            HomeSection(type: .banner, title: nil, games: [bannerGame]),
-            HomeSection(type: .horizontal, title: "Популярное", games: popular),
-            HomeSection(type: .horizontal, title: "Топ по рейтингу", games: topRated),
-            HomeSection(type: .horizontal, title: "Скоро выйдет", games: upcoming)
-    ]
+        if let bannerGame = trending.first ?? popular.first ?? topRated.first {
+            sections.append(HomeSection(type: .banner, title: nil, games: [bannerGame]))
+        }
+        
+        if !popular.isEmpty {
+            sections.append(HomeSection(type: .horizontal, title: Strings.Sections.popular, games: popular))
+        }
+        if !topRated.isEmpty {
+            sections.append(HomeSection(type: .horizontal, title: Strings.Sections.topRated, games: topRated))
+        }
+        if !upcoming.isEmpty {
+            sections.append(HomeSection(type: .horizontal, title: Strings.Sections.upcoming, games: upcoming))
+        }
+        
+        return sections
     }
 }

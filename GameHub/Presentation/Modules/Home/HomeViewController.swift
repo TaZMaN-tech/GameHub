@@ -36,7 +36,7 @@ final class HomeViewController: UIViewController, HomeViewInput {
     }
     
     private func setupUI() {
-        title = "GameHub"
+        title = Strings.Home.title
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
@@ -141,15 +141,15 @@ final class HomeViewController: UIViewController, HomeViewInput {
     
     func showError(_ message: String) {
         let alert = UIAlertController(
-            title: "Не удалось загрузить игры",
+            title: Strings.Home.errorTitle,
             message: message,
             preferredStyle: .alert
         )
         
-        let retryAction = UIAlertAction(title: "Повторить", style: .default) { [weak self] _ in
+        let retryAction = UIAlertAction(title: Strings.Home.retryButton, style: .default) { [weak self] _ in
             self?.output?.didTapRetry()
         }
-        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: Strings.Home.cancelButton, style: .cancel, handler: nil)
         
         alert.addAction(retryAction)
         alert.addAction(cancelAction)

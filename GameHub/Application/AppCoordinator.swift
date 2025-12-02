@@ -9,6 +9,7 @@ import UIKit
 
 protocol AppCoordinating: AnyObject {
     func start()
+    func saveData()
 }
 
 final class AppCoordinator: AppCoordinating {
@@ -30,7 +31,7 @@ final class AppCoordinator: AppCoordinating {
         let homeVC = HomeAssembly(dependencies: deps).build(coordinator: self)
         homeNavController.viewControllers = [homeVC]
         homeNavController.tabBarItem = UITabBarItem(
-            title: "GameHub",
+            title: Strings.Home.title,
             image: UIImage(systemName: "house"),
             selectedImage: UIImage(systemName: "house.fill")
         )
@@ -38,7 +39,7 @@ final class AppCoordinator: AppCoordinating {
         let favoritesVC = FavoritesAssembly(dependencies: deps).build(coordinator: self)
         favoritesNavController.viewControllers = [favoritesVC]
         favoritesNavController.tabBarItem = UITabBarItem(
-            title: "Избранное",
+            title: Strings.Favorites.title,
             image: UIImage(systemName: "star"),
             selectedImage: UIImage(systemName: "star.fill")
         )
@@ -48,6 +49,10 @@ final class AppCoordinator: AppCoordinating {
 
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
+    }
+    
+    func saveData() {
+        deps.coreDataStack.saveContext()
     }
 }
 

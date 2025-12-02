@@ -29,25 +29,17 @@ final class NetworkService: NetworkServicing {
             throw NetworkError.invalidURL
         }
         
-        do {
-            let (data, response) = try await session.data(for: request)
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw NetworkError.invalidResponse
-            }
-            
-            guard 200..<300 ~= httpResponse.statusCode else {
-                throw NetworkError.statusCode(httpResponse.statusCode)
-            }
-            
-            do {
-                return try decoder.decode(T.self, from: data)
-            } catch {
-                throw NetworkError.decoding(error)
-            }
-        } catch {
-            throw NetworkError.transport(error)
+        let (data, response) = try await session.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
         }
+        
+        guard 200..<300 ~= httpResponse.statusCode else {
+            throw NetworkError.statusCode(httpResponse.statusCode)
+        }
+        
+        return try decoder.decode(T.self, from: data)
     }
     
     

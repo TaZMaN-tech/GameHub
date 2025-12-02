@@ -20,7 +20,7 @@ final class FavoritesViewController: UIViewController, FavoritesViewInput {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Избранное"
+        title = Strings.Favorites.title
         setupTable()
         output?.viewDidLoad()
     }
@@ -67,7 +67,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] _, _, completion in
+        let deleteAction = UIContextualAction(style: .destructive, title: Strings.Favorites.deleteAction) { [weak self] _, _, completion in
             self?.output?.didDeleteRow(at: indexPath.row)
             completion(true)
         }

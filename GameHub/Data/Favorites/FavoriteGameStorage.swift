@@ -9,31 +9,26 @@ import Foundation
 import CoreData
 
 protocol FavoriteGameStoring {
-    func isFavorite(gameID: Int) -> Bool
+    func isFavorite(gameID: Int) throws -> Bool
     func toggleFavorite(_ game: Game) throws
-    func allFavorites() -> [Game]
+    func allFavorites() throws -> [Game]
 }
 
 final class FavoriteGameStorage: FavoriteGameStoring {
     
     private let context: NSManagedObjectContext
     
-    init(context: NSManagedObjectContext = CoreDataStack.shared.viewContext) {
+    init(context: NSManagedObjectContext) {
         self.context = context
     }
     
-    func isFavorite(gameID: Int) -> Bool {
+    func isFavorite(gameID: Int) throws -> Bool {
         let request = FavoriteGame.fetchRequest()
         request.predicate = NSPredicate(format: "id == %d", gameID)
         request.fetchLimit = 1
         
-        do {
-            let count = try context.count(for: request)
-            return count > 0
-        } catch {
-            print("isFavorite error:", error)
-            return false
-        }
+        let count = try context.count(for: request)
+        return count > 0
     }
     
     func toggleFavorite(_ game: Game) throws {
@@ -57,29 +52,21 @@ final class FavoriteGameStorage: FavoriteGameStoring {
         try context.save()
     }
     
-    func allFavorites() -> [Game] {
+    func allFavorites() throws -> [Game] {
         let request = FavoriteGame.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: #keyPath(FavoriteGame.createdAt), ascending: false)]
         
-        do {
-            let objects = try context.fetch(request)
-            return objects.map { favorite in
-                let url = favorite.imageURL.flatMap { URL(string: $0) }
-                
-                return Game(
-                    id: Int(favorite.id),
-                    name: favorite.name ?? "Unknown",
-                    genre: favorite.genre ?? "Unknown",
-                    rating: favorite.rating,
-                    backgroundImageURL: url
-                )
-            }
-        } catch {
-            print("allFavorites error:", error)
-            return []
+        let objects = try context.fetch(request)
+        return objects.map { favorite in
+            let url = favorite.imageURL.flatMap { URL(string: $0) }
+            
+            return Game(
+                id: Int(favorite.id),
+                name: favorite.name ?? "Unknown",
+                genre: favorite.genre ?? "Unknown",
+                rating: favorite.rating,
+                backgroundImageURL: url
+            )
         }
     }
-    
-    
-    
 }

@@ -7,15 +7,20 @@
 
 import CoreData
 
-final class CoreDataStack {
-    
-    static let shared = CoreDataStack()
+protocol CoreDataStackProviding {
+    var viewContext: NSManagedObjectContext { get }
+    func saveContext()
+}
+
+final class CoreDataStack: CoreDataStackProviding {
     
     let persistentContainer: NSPersistentContainer
-    var viewContext: NSManagedObjectContext { persistentContainer.viewContext }
+    var viewContext: NSManagedObjectContext {
+        persistentContainer.viewContext
+    }
     
-    private init() {
-        let container = NSPersistentContainer(name: "GameHub")
+    init(modelName: String = "GameHub") {
+        let container = NSPersistentContainer(name: modelName)
         
         container.loadPersistentStores { _, error in
             if let error {

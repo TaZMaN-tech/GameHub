@@ -30,6 +30,7 @@ protocol FavoritesInteractorInput: AnyObject {
 
 protocol FavoritesInteractorOutput: AnyObject {
     func didLoadFavorites(_ games: [Game])
+    func didFailWithError(_ error: Error)
 }
 
 // MARK: - Router

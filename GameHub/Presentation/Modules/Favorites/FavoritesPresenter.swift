@@ -63,4 +63,8 @@ extension FavoritesPresenter: FavoritesInteractorOutput {
         view?.display(games: viewModels)
         view?.showEmptyState(games.isEmpty)
     }
+    
+    func didFailWithError(_ error: Error) {
+        print("Favorites error: \(error.localizedDescription)")
+    }
 }

@@ -18,17 +18,21 @@ final class FavoritesInteractor: FavoritesInteractorInput {
     }
     
     func fetchFavorites() {
-        let games = storage.allFavorites()
-        output?.didLoadFavorites(games)
+        do {
+            let games = try storage.allFavorites()
+            output?.didLoadFavorites(games)
+        } catch {
+            output?.didFailWithError(error)
+        }
     }
     
     func removeFavorite(game: Game) {
         do {
             try storage.toggleFavorite(game)
-            let games = storage.allFavorites()
+            let games = try storage.allFavorites()
             output?.didLoadFavorites(games)
         } catch {
-            print("removeFavorite error:", error)
+            output?.didFailWithError(error)
         }
     }
 }
