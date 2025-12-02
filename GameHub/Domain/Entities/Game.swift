@@ -14,3 +14,13 @@ struct Game {
     let rating: Double
     let backgroundImageURL: URL?
 }
+
+extension Game {
+    var formattedRating: String {
+        if rating > 0 {
+            return "⭐️ \(String(format: "%.1f", rating))"
+        } else {
+            return "Нет рейтинга"
+        }
+    }
+}

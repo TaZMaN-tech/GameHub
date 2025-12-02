@@ -27,17 +27,10 @@ final class GameDetailsPresenter {
     }
     
     private func makeViewModel(from game: Game, isFavorite: Bool) -> GameDetailsViewModel {
-        let ratingText: String
-        if game.rating > 0 {
-            ratingText = "⭐️ \(String(format: "%.1f", game.rating))"
-        } else {
-            ratingText = "Нет рейтинга"
-        }
-        
         return GameDetailsViewModel(
             title: game.name,
             genre: game.genre,
-            ratingText: ratingText,
+            ratingText: game.formattedRating,
             imageURL: game.backgroundImageURL,
             isFavorite: isFavorite
         )

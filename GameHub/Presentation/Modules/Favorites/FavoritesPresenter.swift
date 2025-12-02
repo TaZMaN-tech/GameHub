@@ -26,7 +26,7 @@ final class FavoritesPresenter {
         games.map {
             FavoriteGameViewModel(
                 title: $0.name,
-                subtitle: "\($0.genre)  •  ⭐️ \(String(format: "%.1f", $0.rating))",
+                subtitle: "\($0.genre)  •  \($0.formattedRating)",
                 imageURL: $0.backgroundImageURL
             )
         }
