@@ -12,13 +12,19 @@ final class HomeInteractor:  HomeInteractorInput {
     weak var output: HomeInteractorOutput?
     
     private let gameService: GameServicing
+    private var loadTask: Task<Void, Never>?
     
     init(gameService: GameServicing) {
         self.gameService = gameService
     }
     
+    deinit {
+        loadTask?.cancel()
+    }
+    
     func loadInitialData() {
-        Task { [weak self] in
+        loadTask?.cancel()
+        loadTask = Task { [weak self] in
             guard let self else { return }
             do {
                 let sections = try await self.gameService.fetchHomeSections()
