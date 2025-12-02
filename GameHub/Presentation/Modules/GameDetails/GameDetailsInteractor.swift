@@ -20,13 +20,23 @@ final class GameDetailsInteractor: GameDetailsInteractorInput {
     }
     
     func load() {
-        let isFavorite = favorites.isFavorite(gameID: game.id)
-        output?.didLoad(game: game, isFavorite: isFavorite)
+        do {
+            let isFavorite = try favorites.isFavorite(gameID: game.id)
+            output?.didLoad(game: game, isFavorite: isFavorite)
+        } catch {
+            output?.didFailWithError(error)
+            output?.didLoad(game: game, isFavorite: false)
+        }
     }
     
     func refreshFavoriteState() {
-        let isFavorite = favorites.isFavorite(gameID: game.id)
-        output?.didUpdateFavorite(isFavorite: isFavorite)
+        do {
+            let isFavorite = try favorites.isFavorite(gameID: game.id)
+            output?.didUpdateFavorite(isFavorite: isFavorite)
+        } catch {
+            output?.didFailWithError(error)
+            output?.didUpdateFavorite(isFavorite: false)
+        }
     }
     
     func toggleFavorite() {
@@ -34,7 +44,7 @@ final class GameDetailsInteractor: GameDetailsInteractorInput {
             try favorites.toggleFavorite(game)
             refreshFavoriteState()
         } catch {
-            print("toggleFavorite error:", error)
+            output?.didFailWithError(error)
         }
     }
     

@@ -51,7 +51,7 @@ final class GameDetailsViewController: UIViewController, GameDetailsViewInput {
         title = viewModel.title
         contentView.titleLabel.text = viewModel.title
         contentView.genreLabel.text = viewModel.genre
-        contentView.ratingLabel.text = "Rating: \(viewModel.ratingText)"
+        contentView.ratingLabel.text = viewModel.ratingText
         
         updateFavorite(isFavorite: viewModel.isFavorite)
         

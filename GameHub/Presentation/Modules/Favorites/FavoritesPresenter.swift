@@ -65,6 +65,6 @@ extension FavoritesPresenter: FavoritesInteractorOutput {
     }
     
     func didFailWithError(_ error: Error) {
-        print("Favorites error: \(error.localizedDescription)")
+        view?.showError("Не удалось загрузить избранное. Попробуйте позже.")
     }
 }

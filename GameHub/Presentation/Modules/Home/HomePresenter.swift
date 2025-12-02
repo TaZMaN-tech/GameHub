@@ -75,7 +75,7 @@ extension HomePresenter: HomeInteractorOutput {
         if let netError = error as? NetworkError {
             view?.showError(netError.userMessage)
         } else {
-            view?.showError("Что-то пошло не так. Попробуйте позже.")
+            view?.showError("Не удалось загрузить данные. Попробуйте позже.")
         }
     }
 }

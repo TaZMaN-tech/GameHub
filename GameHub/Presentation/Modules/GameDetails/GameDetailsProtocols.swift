@@ -31,6 +31,7 @@ protocol GameDetailsInteractorInput: AnyObject {
 protocol GameDetailsInteractorOutput: AnyObject {
     func didLoad(game: Game, isFavorite: Bool)
     func didUpdateFavorite(isFavorite: Bool)
+    func didFailWithError(_ error: Error)
 }
 
 // MARK: - Router

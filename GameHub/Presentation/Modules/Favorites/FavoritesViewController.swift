@@ -44,6 +44,16 @@ final class FavoritesViewController: UIViewController, FavoritesViewInput {
     func showEmptyState(_ isEmpty: Bool) {
         contentView.setEmptyState(isEmpty)
     }
+    
+    func showError(_ message: String) {
+        let alert = UIAlertController(
+            title: "Ошибка",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "ОК", style: .default))
+        present(alert, animated: true)
+    }
 }
 
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {

@@ -69,5 +69,8 @@ extension GameDetailsPresenter: GameDetailsInteractorOutput {
         view?.updateFavorite(isFavorite: isFavorite)
     }
     
-    
+    func didFailWithError(_ error: Error) {
+        // В будущем можно показать alert пользователю
+        print("GameDetails error: \(error.localizedDescription)")
+    }
 }

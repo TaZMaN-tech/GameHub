@@ -12,6 +12,7 @@ import UIKit
 protocol FavoritesViewInput: AnyObject {
     func display(games: [FavoriteGameViewModel])
     func showEmptyState(_ isEmpty: Bool)
+    func showError(_ message: String)
 }
 
 protocol FavoritesViewOutput: AnyObject {
