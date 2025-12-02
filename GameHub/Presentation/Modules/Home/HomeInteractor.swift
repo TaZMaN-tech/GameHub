@@ -18,15 +18,16 @@ final class HomeInteractor:  HomeInteractorInput {
     }
     
     func loadInitialData() {
-        Task {
+        Task { [weak self] in
+            guard let self else { return }
             do {
                 let sections = try await self.gameService.fetchHomeSections()
-                await MainActor.run {
-                    self.output?.didLoad(sections: sections)
+                await MainActor.run { [weak self] in
+                    self?.output?.didLoad(sections: sections)
                 }
             } catch {
-                await MainActor.run {
-                    self.output?.didFailLoading(error)
+                await MainActor.run { [weak self] in
+                    self?.output?.didFailLoading(error)
                 }
             }
         }
