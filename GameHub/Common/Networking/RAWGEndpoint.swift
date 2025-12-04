@@ -13,6 +13,7 @@ enum RAWGEndpoint: Endpoint {
     case topRated(page: Int)
     case upcoming(page: Int)
     case trending(page: Int)
+    case search(query: String, page: Int)
     
     
     var urlRequest: URLRequest? {
@@ -38,7 +39,8 @@ enum RAWGEndpoint: Endpoint {
         case .popular,
                 .topRated,
                 .upcoming,
-                .trending:
+                .trending,
+                .search:
             return "/games"
         }
     }
@@ -48,7 +50,8 @@ enum RAWGEndpoint: Endpoint {
         case .popular(page: let page),
                 .topRated(page: let page),
                 .upcoming(page: let page),
-                .trending(page: let page):
+                .trending(page: let page),
+                .search(_, page: let page):
             return page
         }
     }
@@ -64,6 +67,8 @@ enum RAWGEndpoint: Endpoint {
                     URLQueryItem(name: "ordering", value: "-added")]
         case .trending:
             return [URLQueryItem(name: "ordering", value: "-metacritic")]
+        case .search(let query, _):
+            return [URLQueryItem(name: "search", value: query)]
         }
     }
     
