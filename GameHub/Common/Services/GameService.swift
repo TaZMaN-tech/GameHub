@@ -10,6 +10,7 @@ import Foundation
 
 protocol GameServicing {
     func fetchHomeSections() async throws -> [HomeSection]
+    func searchGames(query: String, page: Int) async throws -> [Game]
 }
 
 final class GameService: GameServicing {
@@ -57,5 +58,12 @@ final class GameService: GameServicing {
         }
         
         return sections
+    }
+    
+    func searchGames(query: String, page: Int) async throws -> [Game] {
+        let response: RAWGGameResponseDTO = try await networkService.request(
+            RAWGEndpoint.search(query: query, page: page)
+        )
+        return response.results.map { $0.toDomain() }
     }
 }
