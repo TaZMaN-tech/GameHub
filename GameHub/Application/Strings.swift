@@ -26,4 +26,8 @@ enum Strings {
         static let topRated = "Топ по рейтингу"
         static let upcoming = "Скоро выйдет"
     }
+    
+    enum Search {
+        static let title = "Поиск"
+    }
 }

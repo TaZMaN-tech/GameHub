@@ -19,6 +19,7 @@ final class AppCoordinator: AppCoordinating {
 
     private let tabBarController = UITabBarController()
     private let homeNavController = UINavigationController()
+    private let searchNavController = UINavigationController()
     private let favoritesNavController = UINavigationController()
 
     init(window: UIWindow, dependencies: AppDependencies = .makeDefault()) {
@@ -35,6 +36,14 @@ final class AppCoordinator: AppCoordinating {
             image: UIImage(systemName: "house"),
             selectedImage: UIImage(systemName: "house.fill")
         )
+        
+        let searchVC = SearchAssembly(dependencies: deps).build(coordinator: self)
+        searchNavController.viewControllers = [searchVC]
+        searchNavController.tabBarItem = UITabBarItem(
+            title: Strings.Search.title,
+            image: UIImage(systemName: "magnifyingglass"),
+            selectedImage: UIImage(systemName: "magnifyingglass.circle")
+        )
 
         let favoritesVC = FavoritesAssembly(dependencies: deps).build(coordinator: self)
         favoritesNavController.viewControllers = [favoritesVC]
@@ -45,7 +54,11 @@ final class AppCoordinator: AppCoordinating {
         )
 
 
-        tabBarController.viewControllers = [homeNavController, favoritesNavController]
+        tabBarController.viewControllers = [
+            homeNavController,
+            searchNavController,
+            favoritesNavController
+        ]
 
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
@@ -75,5 +88,12 @@ extension AppCoordinator: FavoritesNavigation {
     func openGameDetails(fromFavorites game: Game) {
         let vc = GameDetailsAssembly(deps: deps).build(game: game, coordinator: self)
         favoritesNavController.pushViewController(vc, animated: true)
+    }
+}
+
+extension AppCoordinator: SearchNavigation {
+    func openGameDetails(fromSearch game: Game) {
+        let vc = GameDetailsAssembly(deps: deps).build(game: game, coordinator: self)
+        searchNavController.pushViewController(vc, animated: true)
     }
 }
